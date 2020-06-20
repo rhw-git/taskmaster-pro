@@ -143,7 +143,7 @@ $("#remove-tasks").on("click", function () {
   saveTasks();
 });
 
-// sort table
+// sort tables
 $(".card .list-group").sortable({
   connectWith: $(".card .list-group"),
   scroll: false,
@@ -173,17 +173,31 @@ $(".card .list-group").sortable({
         // add task data to the temp array as an object
         tempArr.push({
           text: text,
-          data: date,
+          date: date,
         });
       });
     // trim down list' ID to match object property
     var arrName = $(this).attr("id").replace("list-", "");
     // update arry on tasks object and save tasks [arrName]= temArr;
     tasks[arrName] = tempArr;
-    console.log(tasks);
+    // console.log(tasks);
     saveTasks();
   },
 });
-
+// droppable
+$("#trash").droppable({
+  accept: ".card .list-group-item",
+  tolerance: "touch",
+  drop: function (event, ui) {
+    console.log("drop");
+    ui.draggable.remove();
+  },
+  over: function (event, ui) {
+    console.log("over");
+  },
+  out: function (event, ui) {
+    console.log("out");
+  },
+});
 // load tasks for the first time
 loadTasks();
